@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=
+SOURCEFILES_QUOTED_IF_SPACED=dspic33_setup_test.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=
-POSSIBLE_DEPFILES=
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/dspic33_setup_test.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/dspic33_setup_test.o.d
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES=${OBJECTDIR}/dspic33_setup_test.o
 
 # Source Files
-SOURCEFILES=
+SOURCEFILES=dspic33_setup_test.c
 
 
 
@@ -95,7 +95,19 @@ MP_LINKER_FILE_OPTION=,--script=p33CK64MC105.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/dspic33_setup_test.o: dspic33_setup_test.c  .generated_files/f2d2301f3834cacd6f0454040293ce25de884228.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dspic33_setup_test.o.d 
+	@${RM} ${OBJECTDIR}/dspic33_setup_test.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  dspic33_setup_test.c  -o ${OBJECTDIR}/dspic33_setup_test.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dspic33_setup_test.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
+${OBJECTDIR}/dspic33_setup_test.o: dspic33_setup_test.c  .generated_files/8327dc1cfeef4a2be24609fb1d89831feb2ce286.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/dspic33_setup_test.o.d 
+	@${RM} ${OBJECTDIR}/dspic33_setup_test.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  dspic33_setup_test.c  -o ${OBJECTDIR}/dspic33_setup_test.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/dspic33_setup_test.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 endif
 
 # ------------------------------------------------------------------------------------

@@ -1,0 +1,286 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title "Power Page"
+Date "2021-11-14"
+Rev "0.1"
+Comp "3-Phase Inverter Board Project"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 "Author: Abdullah Almosalami"
+$EndDescr
+$Comp
+L Connector:Conn_01x02_Female J?
+U 1 1 61B29411
+P 1050 1150
+F 0 "J?" H 950 1300 50  0000 L CNN
+F 1 "Anderson Powerpole 15A" V 1200 650 50  0000 L CNN
+F 2 "" H 1050 1150 50  0001 C CNN
+F 3 "~" H 1050 1150 50  0001 C CNN
+	1    1050 1150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:+VDC #PWR?
+U 1 1 61B2B1AA
+P 1350 1100
+F 0 "#PWR?" H 1350 1000 50  0001 C CNN
+F 1 "+VDC" H 1350 1375 50  0000 C CNN
+F 2 "" H 1350 1100 50  0001 C CNN
+F 3 "" H 1350 1100 50  0001 C CNN
+	1    1350 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1250 1150 1350 1150
+Wire Wire Line
+	1350 1150 1350 1100
+$Comp
+L power:GND #PWR?
+U 1 1 61B2B5A5
+P 1350 1300
+F 0 "#PWR?" H 1350 1050 50  0001 C CNN
+F 1 "GND" H 1355 1127 50  0000 C CNN
+F 2 "" H 1350 1300 50  0001 C CNN
+F 3 "" H 1350 1300 50  0001 C CNN
+	1    1350 1300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1250 1250 1350 1250
+Wire Wire Line
+	1350 1250 1350 1300
+$Comp
+L power:+VDC #PWR?
+U 1 1 61B2BDD8
+P 2550 950
+F 0 "#PWR?" H 2550 850 50  0001 C CNN
+F 1 "+VDC" V 2550 1179 50  0000 L CNN
+F 2 "" H 2550 950 50  0001 C CNN
+F 3 "" H 2550 950 50  0001 C CNN
+	1    2550 950 
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Switch:SW_SPST SW?
+U 1 1 61B2CC85
+P 2950 950
+F 0 "SW?" H 2950 1185 50  0000 C CNN
+F 1 "SW_SPST" H 2950 1094 50  0000 C CNN
+F 2 "" H 2950 950 50  0001 C CNN
+F 3 "~" H 2950 950 50  0001 C CNN
+	1    2950 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:D_TVS D?
+U 1 1 61B2E01B
+P 3350 1250
+F 0 "D?" V 3304 1330 50  0000 L CNN
+F 1 "D_TVS_30V" V 3395 1330 50  0000 L CNN
+F 2 "" H 3350 1250 50  0001 C CNN
+F 3 "~" H 3350 1250 50  0001 C CNN
+	1    3350 1250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Fuse F?
+U 1 1 61B2EBB8
+P 3750 950
+F 0 "F?" V 3553 950 50  0000 C CNN
+F 1 "12A" V 3644 950 50  0000 C CNN
+F 2 "" V 3680 950 50  0001 C CNN
+F 3 "~" H 3750 950 50  0001 C CNN
+	1    3750 950 
+	0    1    1    0   
+$EndComp
+$Comp
+L 3_phase_inverter_board:CSD18534KCS Q?
+U 1 1 61B2F602
+P 4600 950
+F 0 "Q?" V 4842 950 50  0000 C CNN
+F 1 "CSD18534KCS" V 4751 950 50  0000 C CNN
+F 2 "" H 4600 950 50  0001 C CNN
+F 3 "" H 4600 950 50  0001 C CNN
+	1    4600 950 
+	0    -1   -1   0   
+$EndComp
+$Comp
+L 3_phase_inverter_board:MIC5021 U?
+U 1 1 61B30241
+P 4600 2000
+F 0 "U?" H 4250 2500 50  0000 C CNN
+F 1 "MIC5021" H 4900 1600 50  0000 C CNN
+F 2 "" H 4600 2000 50  0001 C CNN
+F 3 "" H 4600 2000 50  0001 C CNN
+	1    4600 2000
+	1    0    0    -1  
+$EndComp
+Text GLabel 4550 1300 0    35   Output ~ 0
+INPUT_GATE_DR
+Wire Wire Line
+	4550 1300 4600 1300
+Wire Wire Line
+	4600 1300 4600 1250
+Text GLabel 5100 1900 2    35   Input ~ 0
+INPUT_GATE_DR
+$Comp
+L Device:R_Small R?
+U 1 1 61B313B4
+P 5100 950
+F 0 "R?" V 4904 950 50  0000 C CNN
+F 1 "5mOhms" V 4995 950 50  0000 C CNN
+F 2 "" H 5100 950 50  0001 C CNN
+F 3 "~" H 5100 950 50  0001 C CNN
+	1    5100 950 
+	0    1    1    0   
+$EndComp
+Text GLabel 6050 2100 2    35   Input ~ 0
+INPUT_S+
+Text GLabel 5100 2200 2    35   Input ~ 0
+INPUT_S-
+Text GLabel 5000 1100 3    35   Input ~ 0
+INPUT_S+
+Text GLabel 5200 1100 3    35   Input ~ 0
+INPUT_S-
+Text GLabel 5750 950  2    80   Output ~ 16
+VIN
+$Comp
+L Device:C_Small C?
+U 1 1 61B32339
+P 5700 1950
+F 0 "C?" H 5792 1996 50  0000 L CNN
+F 1 "10nF" H 5792 1905 50  0000 L CNN
+F 2 "" H 5700 1950 50  0001 C CNN
+F 3 "~" H 5700 1950 50  0001 C CNN
+	1    5700 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 1800 5700 1800
+Wire Wire Line
+	5700 1800 5700 1850
+Wire Wire Line
+	5700 2100 5100 2100
+Wire Wire Line
+	5700 2050 5700 2100
+Wire Wire Line
+	6050 2100 5700 2100
+Connection ~ 5700 2100
+Text GLabel 4100 1900 0    40   BiDi ~ 0
+INPUT_LOAD_SW
+NoConn ~ 4100 2100
+$Comp
+L power:GND #PWR?
+U 1 1 61B356C0
+P 4050 2250
+F 0 "#PWR?" H 4050 2000 50  0001 C CNN
+F 1 "GND" H 4055 2077 50  0000 C CNN
+F 2 "" H 4050 2250 50  0001 C CNN
+F 3 "" H 4050 2250 50  0001 C CNN
+	1    4050 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 2250 4050 2200
+Wire Wire Line
+	4050 2200 4100 2200
+Wire Wire Line
+	2550 950  2750 950 
+Wire Wire Line
+	3150 950  3350 950 
+Wire Wire Line
+	3900 950  4050 950 
+Wire Wire Line
+	5200 950  5750 950 
+Connection ~ 4400 950 
+Wire Wire Line
+	4400 950  4800 950 
+Connection ~ 4800 950 
+Wire Wire Line
+	4800 950  5000 950 
+Wire Wire Line
+	3350 1100 3350 950 
+Connection ~ 3350 950 
+Wire Wire Line
+	3350 950  3600 950 
+Wire Wire Line
+	5000 1100 5000 950 
+Connection ~ 5000 950 
+Wire Wire Line
+	5200 1100 5200 950 
+Connection ~ 5200 950 
+$Comp
+L power:GND #PWR?
+U 1 1 61B36957
+P 3350 1550
+F 0 "#PWR?" H 3350 1300 50  0001 C CNN
+F 1 "GND" H 3355 1377 50  0000 C CNN
+F 2 "" H 3350 1550 50  0001 C CNN
+F 3 "" H 3350 1550 50  0001 C CNN
+	1    3350 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3350 1550 3350 1400
+Wire Wire Line
+	4100 1800 4050 1800
+Wire Wire Line
+	4050 1800 4050 950 
+Connection ~ 4050 950 
+Wire Wire Line
+	4050 950  4400 950 
+Wire Notes Line
+	2000 550  2000 2600
+Wire Notes Line
+	2000 2600 6700 2600
+Wire Notes Line
+	6700 550  6700 2600
+Text Notes 2100 2500 0    100  ~ 20
+INPUT PROTECTION
+Wire Notes Line
+	500  2300 2000 2300
+Text Notes 550  2250 0    100  ~ 20
+VBAT
+Text Notes 1100 2200 0    70   ~ 14
+Nominal: 12V
+Text GLabel 900  4250 2    80   Output ~ 16
+VIN
+$Comp
+L Device:CP C?
+U 1 1 61B44928
+P 1800 4750
+F 0 "C?" H 1918 4796 50  0000 L CNN
+F 1 "220uF" H 1918 4705 50  0000 L CNN
+F 2 "" H 1838 4600 50  0001 C CNN
+F 3 "~" H 1800 4750 50  0001 C CNN
+	1    1800 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61B44E06
+P 2100 5050
+F 0 "#PWR?" H 2100 4800 50  0001 C CNN
+F 1 "GND" H 2105 4877 50  0000 C CNN
+F 2 "" H 2100 5050 50  0001 C CNN
+F 3 "" H 2100 5050 50  0001 C CNN
+	1    2100 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 61B45350
+P 2350 4750
+F 0 "C?" H 2465 4796 50  0000 L CNN
+F 1 "100nF" H 2465 4705 50  0000 L CNN
+F 2 "" H 2388 4600 50  0001 C CNN
+F 3 "~" H 2350 4750 50  0001 C CNN
+	1    2350 4750
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
