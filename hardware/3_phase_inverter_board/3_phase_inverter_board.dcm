@@ -12,6 +12,10 @@ $CMP INA186A1
 D Current-Sense Amplifier, fixed x20 Gain
 $ENDCMP
 #
+$CMP LD1117AVCC
+D IC REG LINEAR 3.3V 1A TO220AB
+$ENDCMP
+#
 $CMP LM3478
 D High-Efficiency Low-Side N-Channel Controller for Switching Regulator (e.g., boost converter, flyback converter)
 K Flyback Converter, Boost Converter
