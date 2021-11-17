@@ -1,8 +1,8 @@
 /*
- * File:   dspic33_setup_test.c
+ * File:   main.c
  * Author: Abdullah Almosalami
  *
- * Created on November 12, 2021, 8:59 PM
+ * Created on November 17, 2021, 3:57 PM
  */
 
 
@@ -155,5 +155,5 @@ int main(void) {
     }
     
     
-    return;
+    return 1;
 }

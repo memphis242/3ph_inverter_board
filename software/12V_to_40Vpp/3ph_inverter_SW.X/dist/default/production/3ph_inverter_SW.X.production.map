@@ -7,7 +7,7 @@ Command:
   -p33CK64MC105 \
   --mdfp=C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16 \
   -o \
-  dist/default/production/dspic33_practice.X.production.elf \
+  dist/default/production/3ph_inverter_SW.X.production.elf \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/.. \
   -LC:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16/bin/../support/dsPIC33C/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../lib \
@@ -18,7 +18,7 @@ Command:
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/dspic33_setup_test.o \
+  build/default/production/main.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33CK64MC105.gld.00 \
@@ -33,7 +33,7 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/dspic33_practice.X.production.map \
+  -Map=dist/default/production/3ph_inverter_SW.X.production.map \
   --report-mem \
   --memorysummary \
   dist/default/production/memoryfile.xml \
@@ -159,7 +159,7 @@ FALTREG          0x00af44           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/dspic33_setup_test.o
+LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD p33CK64MC105
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libfx-elf.a
@@ -205,7 +205,7 @@ LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libfx-elf.a
  *(.user_init)
  *(.handle)
  *(.isr*)
- .isr.text        0x0002fa         0x22 build/default/production/dspic33_setup_test.o
+ .isr.text        0x0002fa         0x22 build/default/production/main.o
                   0x0002fa                  __INT0Interrupt
  .isr             0x00031c          0x4 default_isr
                   0x00031c                  __DefaultInterrupt
@@ -268,26 +268,26 @@ __FALTREG
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x146f
+.debug_info       0x000000       0x1470
  *(.debug_info)
- .debug_info      0x000000       0x146f build/default/production/dspic33_setup_test.o
+ .debug_info      0x000000       0x1470 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000         0xdc
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0xdc build/default/production/dspic33_setup_test.o
+ .debug_abbrev    0x000000         0xdc build/default/production/main.o
 
-.debug_line       0x000000        0x13c
+.debug_line       0x000000        0x12e
  *(.debug_line)
- .debug_line      0x000000        0x13c build/default/production/dspic33_setup_test.o
+ .debug_line      0x000000        0x12e build/default/production/main.o
 
 .debug_frame      0x000000         0x52
  *(.debug_frame)
- .debug_frame     0x000000         0x52 build/default/production/dspic33_setup_test.o
+ .debug_frame     0x000000         0x52 build/default/production/main.o
 
 .debug_str        0x000000         0x92
  *(.debug_str)
- .debug_str       0x000000         0x92 build/default/production/dspic33_setup_test.o
+ .debug_str       0x000000         0x92 build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -299,7 +299,7 @@ __FALTREG
                   0x000000         0x2e
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x2e build/default/production/dspic33_setup_test.o
+                  0x000000         0x2e build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -307,7 +307,7 @@ __FALTREG
 .debug_aranges    0x000000         0x18
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/dspic33_setup_test.o
+                  0x000000         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2462,83 +2462,83 @@ LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/dspic33_practice.X.production.elf elf32-pic30)
+OUTPUT(dist/default/production/3ph_inverter_SW.X.production.elf elf32-pic30)
 LOAD /CW/_FSEC
 LOAD default_isr
 
 .debug_pubtypes
                   0x000018        0x1dd
  .debug_pubtypes
-                  0x000018        0x1dd build/default/production/dspic33_setup_test.o
+                  0x000018        0x1dd build/default/production/main.o
 
 __c30_signature
                   0x0001f5         0x12
  __c30_signature
-                  0x0001f5          0x6 build/default/production/dspic33_setup_test.o
+                  0x0001f5          0x6 build/default/production/main.o
  __c30_signature
                   0x0001fb          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
  __c30_signature
                   0x000201          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
 
 .config_CTXT4     0x00af44          0x2
- .config_CTXT4    0x00af44          0x2 build/default/production/dspic33_setup_test.o
+ .config_CTXT4    0x00af44          0x2 build/default/production/main.o
 
 .config_SPI2PIN
                   0x00af40          0x2
  .config_SPI2PIN
-                  0x00af40          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af40          0x2 build/default/production/main.o
 
 .config_DMTDIS    0x00af3c          0x2
  .config_DMTDIS
-                  0x00af3c          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af3c          0x2 build/default/production/main.o
 
 .config_DMTCNTH
                   0x00af38          0x2
  .config_DMTCNTH
-                  0x00af38          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af38          0x2 build/default/production/main.o
 
 .config_DMTCNTL
                   0x00af34          0x2
  .config_DMTCNTL
-                  0x00af34          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af34          0x2 build/default/production/main.o
 
 .config_DMTIVTH
                   0x00af30          0x2
  .config_DMTIVTH
-                  0x00af30          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af30          0x2 build/default/production/main.o
 
 .config_DMTIVTL
                   0x00af2c          0x2
  .config_DMTIVTL
-                  0x00af2c          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af2c          0x2 build/default/production/main.o
 
 .config_JTAGEN    0x00af28          0x2
  .config_JTAGEN
-                  0x00af28          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af28          0x2 build/default/production/main.o
 
 .config_BISTDIS
                   0x00af24          0x2
  .config_BISTDIS
-                  0x00af24          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af24          0x2 build/default/production/main.o
 
 .config_FWDTEN    0x00af20          0x2
  .config_FWDTEN
-                  0x00af20          0x2 build/default/production/dspic33_setup_test.o
+                  0x00af20          0x2 build/default/production/main.o
 
 .config_XTBST     0x00af1c          0x2
- .config_XTBST    0x00af1c          0x2 build/default/production/dspic33_setup_test.o
+ .config_XTBST    0x00af1c          0x2 build/default/production/main.o
 
 .config_IESO      0x00af18          0x2
- .config_IESO     0x00af18          0x2 build/default/production/dspic33_setup_test.o
+ .config_IESO     0x00af18          0x2 build/default/production/main.o
 
 .config_BSLIM     0x00af10          0x2
- .config_BSLIM    0x00af10          0x2 build/default/production/dspic33_setup_test.o
+ .config_BSLIM    0x00af10          0x2 build/default/production/main.o
 
 .ivt._INT0Interrupt
                   0x000014          0x2
  .ivt._INT0Interrupt
-                  0x000014          0x2 build/default/production/dspic33_setup_test.o
+                  0x000014          0x2 build/default/production/main.o
 
 .text             0x000322         0x7a
- .text            0x000322         0x7a build/default/production/dspic33_setup_test.o
+ .text            0x000322         0x7a build/default/production/main.o
                   0x000322                  _main
