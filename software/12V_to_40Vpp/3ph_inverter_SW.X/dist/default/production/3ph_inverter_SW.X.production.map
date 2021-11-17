@@ -19,6 +19,7 @@ Command:
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/main.o \
+  build/default/production/src/pwm.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33CK64MC105.gld.00 \
@@ -87,9 +88,9 @@ Default Scalar Model: Small
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x122           0x1b3  (435)
-.text                        0x322                0x7a            0xb7  (183)
+.text                        0x322                0x82            0xc3  (195)
 
-                 Total "program" memory used (bytes):          0x26a  (618) <1%
+                 Total "program" memory used (bytes):          0x276  (630) <1%
 
 
 "data" Memory  [Origin = 0x1000, Length = 0x2000]
@@ -121,6 +122,7 @@ External Symbols in Program Memory (by address):
                   0x0002fa                  __INT0Interrupt
                   0x00031c                  __DefaultInterrupt
                   0x000322                  _main
+                  0x00039e                  _pwm_init_default
                   0x00af00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
@@ -133,6 +135,7 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
                   0x000322                  _main
+                  0x00039e                  _pwm_init_default
 
 Memory Configuration
 
@@ -160,6 +163,7 @@ FALTREG          0x00af44           0x000002
 Linker script and memory map
 
 LOAD build/default/production/main.o
+LOAD build/default/production/src/pwm.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD p33CK64MC105
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libfx-elf.a
@@ -268,22 +272,26 @@ __FALTREG
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1470
+.debug_info       0x000000       0x15b9
  *(.debug_info)
  .debug_info      0x000000       0x1470 build/default/production/main.o
+ .debug_info      0x001470        0x149 build/default/production/src/pwm.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000         0xdc
+.debug_abbrev     0x000000        0x110
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0xdc build/default/production/main.o
+ .debug_abbrev    0x0000dc         0x34 build/default/production/src/pwm.o
 
-.debug_line       0x000000        0x12e
+.debug_line       0x000000        0x166
  *(.debug_line)
- .debug_line      0x000000        0x12e build/default/production/main.o
+ .debug_line      0x000000        0x12f build/default/production/main.o
+ .debug_line      0x00012f         0x37 build/default/production/src/pwm.o
 
-.debug_frame      0x000000         0x52
+.debug_frame      0x000000         0x80
  *(.debug_frame)
  .debug_frame     0x000000         0x52 build/default/production/main.o
+ .debug_frame     0x000052         0x2e build/default/production/src/pwm.o
 
 .debug_str        0x000000         0x92
  *(.debug_str)
@@ -296,18 +304,22 @@ __FALTREG
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0x2e
+                  0x000000         0x55
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x2e build/default/production/main.o
+ .debug_pubnames
+                  0x00002e         0x27 build/default/production/src/pwm.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x18
+.debug_aranges    0x000000         0x30
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/main.o
+ .debug_aranges
+                  0x000018         0x18 build/default/production/src/pwm.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2467,18 +2479,22 @@ LOAD /CW/_FSEC
 LOAD default_isr
 
 .debug_pubtypes
-                  0x000018        0x1dd
+                  0x000030        0x1ef
  .debug_pubtypes
-                  0x000018        0x1dd build/default/production/main.o
+                  0x000030        0x1dd build/default/production/main.o
+ .debug_pubtypes
+                  0x00020d         0x12 build/default/production/src/pwm.o
 
 __c30_signature
-                  0x0001f5         0x12
+                  0x00021f         0x18
  __c30_signature
-                  0x0001f5          0x6 build/default/production/main.o
+                  0x00021f          0x6 build/default/production/main.o
  __c30_signature
-                  0x0001fb          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
+                  0x000225          0x6 build/default/production/src/pwm.o
  __c30_signature
-                  0x000201          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
+                  0x00022b          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
+ __c30_signature
+                  0x000231          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
 
 .config_CTXT4     0x00af44          0x2
  .config_CTXT4    0x00af44          0x2 build/default/production/main.o
@@ -2539,6 +2555,8 @@ __c30_signature
  .ivt._INT0Interrupt
                   0x000014          0x2 build/default/production/main.o
 
-.text             0x000322         0x7a
- .text            0x000322         0x7a build/default/production/main.o
+.text             0x000322         0x82
+ .text            0x000322         0x7c build/default/production/main.o
                   0x000322                  _main
+ .text            0x00039e          0x6 build/default/production/src/pwm.o
+                  0x00039e                  _pwm_init_default

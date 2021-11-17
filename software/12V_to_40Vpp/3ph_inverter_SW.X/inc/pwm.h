@@ -114,7 +114,7 @@
 
 
 // Functions
-
+void pwm_init_default(void);
 
 
 #endif	/* PWM_H */

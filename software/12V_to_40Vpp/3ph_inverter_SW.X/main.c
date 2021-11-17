@@ -78,6 +78,9 @@
 
 
 #include <xc.h>
+#include "pwm.h"
+
+
 #define FCY 100000000u      // Fcy is 100 MHz once PLL is set and we have FPLLO = 400 MHz
                             // This is needed to use the __delay_ms function/macro
 #include <libpic30.h>       // Contains the __delay_ms function/macro
@@ -128,6 +131,9 @@ int main(void) {
     
     // TADA!
     // </editor-fold>
+    
+    // PWM
+    pwm_init_default();
     
     // Now set up an I/O pin for blinking an LED --> I'll choose RC0
     ANSELCbits.ANSELC0 = 0u;        // Configure as digital I/O
