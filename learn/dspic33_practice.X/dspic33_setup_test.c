@@ -6,8 +6,7 @@
  */
 
 
-
-// DSPIC33CK64MC105 Configuration Bit Settings
+// <editor-fold defaultstate="collapsed" desc="dsPIC33CK64MC105 CONFIGURATION">
 
 // FSEC
 #pragma config BWRP = OFF               // Boot Segment Write-Protect bit (Boot Segment may be written)
@@ -40,7 +39,7 @@
 #pragma config WINDIS = ON              // Watchdog Timer Window Enable bit (Watchdog Timer operates in Non-Window mode)
 #pragma config WDTWIN = WIN25           // Watchdog Timer Window Select bits (WDT Window is 25% of WDT period)
 // SWDTPS = No Setting
-#pragma config FWDTEN = ON              // Watchdog Timer Enable bit (WDT enabled in hardware)
+#pragma config FWDTEN = ON_SW           // Watchdog Timer Enable bit (WDT controlled via SW, use WDTCON.ON bit)
 
 // FPOR
 #pragma config BISTDIS = DISABLED       // Memory BIST Feature Disable (mBIST on reset feature disabled)
@@ -75,14 +74,17 @@
 #pragma config CTXT3 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits (Not Assigned)
 #pragma config CTXT4 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits (Not Assigned)
 
+// </editor-fold>
+
 
 #include <xc.h>
 #define FCY 100000000u      // Fcy is 100 MHz once PLL is set and we have FPLLO = 400 MHz
-#include <libpic30.h>
+                            // This is needed to use the __delay_ms function/macro
+#include <libpic30.h>       // Contains the __delay_ms function/macro
 
 
 
-void main(void) {
+int main(void) {
     
     // <editor-fold defaultstate="collapsed" desc="Oscillator Switch to XTPLL with POSC">
     /* So first, I'd like to set up the system clock FOSC to be at 200 MHz (to give Fcy 100MHz)
@@ -115,11 +117,16 @@ void main(void) {
     // TADA!
     // </editor-fold>
     
+    // Now set up an I/O pin for blinking an LED --> I'll choose RC0
+    ANSELCbits.ANSELC0 = 0u;        // Configure as digital I/O
+    TRISCbits.TRISC0 = 0u;          // Configure as output
+    
     
     // Now LED blink!
     while(1){
         
-        
+        LATCbits.LATC0 ^= 1u;   // Toggle LED
+        __delay_ms(250);        // Delay 250 ms
         
     }
     
