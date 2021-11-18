@@ -79,30 +79,51 @@
 
 #include <xc.h>
 #include "pwm.h"
+//#include "duty_cycle.h"
 
 
-#define FCY 100000000u      // Fcy is 100 MHz once PLL is set and we have FPLLO = 400 MHz
+#define FCY 120000000u      // Fcy is 120 MHz once PLL is set and we have FPLLO = 480 MHz
                             // This is needed to use the __delay_ms function/macro
 #include <libpic30.h>       // Contains the __delay_ms function/macro
 #define ei()    (INTCON2bits.GIE = 1u)
 #define di()    (INTCON2bits.GIE = 0u)
 
 
+extern uint16_t pwm_cycle_counter;
+static uint8_t pwm_duty_cycle_index = 0x00u;
+extern const uint16_t pwm1_duty_cycle_vals[100];
+extern const uint16_t pwm2_duty_cycle_vals[100];
+extern const uint16_t pwm3_duty_cycle_vals[100];
 
 
-void __attribute__((__interrupt__,no_auto_psv)) _INT0Interrupt(void) {
+void __attribute__((__interrupt__,no_auto_psv)) _PWM1Interrupt(void) {
     // ISR Code
-    LATCbits.LATC0 ^= 1u;   // Toggle LED
+    pwm_cycle_counter++;
+    
+    // If we've hit the 2000 periods count mark, update duty cycle values
+    if(pwm_cycle_counter >= 20u) {
+        pwm_cycle_counter = 0u;     // Reset the counter
+        
+        pwm_duty_cycle_index++;
+        
+        if(pwm_duty_cycle_index >= 100u) pwm_duty_cycle_index = 0u; // Reset index whenever it's at end
+        
+        // Recall that write to PG1DC will automatically update all the other PGs,
+        // so do that last
+        PWM2_UPDATE_DUTY_CYCLE(pwm2_duty_cycle_vals[pwm_duty_cycle_index]);
+        PWM3_UPDATE_DUTY_CYCLE(pwm3_duty_cycle_vals[pwm_duty_cycle_index]);
+        PWM1_UPDATE_DUTY_CYCLE(pwm1_duty_cycle_vals[pwm_duty_cycle_index]);
+    }
     
     // Clear flag
-    IFS0bits.INT0IF = 0u;
+    IFS4bits.PWM1IF = 0u;       // Clear flag
 }
 
 
 int main(void) {
     
     // <editor-fold defaultstate="collapsed" desc="Oscillator Switch to XTPLL with POSC">
-    /* So first, I'd like to set up the system clock FOSC to be at 200 MHz (to give Fcy 100MHz)
+    /* So first, I'd like to set up the system clock FOSC to be at 240 MHz (to give Fcy 120MHz)
      * off of the 10 MHz external crystal. The first steps were done above already
      * by setting the FOSCSEL and FOSC configuration registers to start up with
      * the internal fast RC oscillator FRC and then to allow switching to the
@@ -110,12 +131,12 @@ int main(void) {
      * XT (medium frequency) mode. Next will be to utilize the oscillator-related
      * SFRs (OSCCON, PLLFBD, and PLLDIV) to actually carry out the switch.
      * 
-     * Since I'm going off of 10 MHz and would like FPLLO of 400 MHz (will be div by two for FOSC),
+     * Since I'm going off of 10 MHz and would like FPLLO of 480 MHz (will be div by two for FOSC),
      * and we recall that FPLLO = FPLLI x ( M / (N1 x N2 x N3) ) (recall there are important restrictions),
-     * so I'll have M = 40, and N1=N2=N3=1.
+     * so I'll have M = 48, and N1=N2=N3=1.
      */ 
     CLKDIVbits.PLLPRE = 1u;     // N1 = 1
-    PLLFBDbits.PLLFBDIV = 40u;  // M = 40
+    PLLFBDbits.PLLFBDIV = 48u;  // M = 48
     PLLDIVbits.POST1DIV = 1u;   // N2 = 1
     PLLDIVbits.POST2DIV = 1u;   // N3 = 1
     
@@ -135,31 +156,23 @@ int main(void) {
     // PWM
     pwm_init_default();
     
-    // Now set up an I/O pin for blinking an LED --> I'll choose RC0
+    // Now set up an I/O pin for debug LED --> I'll choose RC0
     ANSELCbits.ANSELC0 = 0u;        // Configure as digital I/O
     TRISCbits.TRISC0 = 0u;          // Configure as output
     
-    // Ok, now let's try to set up an INT0 interrupt
-    // Firstly, INT0 is on RB2, so need to set that as input
-    ANSELBbits.ANSELB2 = 0u;
-    TRISBbits.TRISB2 = 1u;
-    // Now set up the interrupt
-    INTCON2bits.INT0EP = 0u;    // Rising-edge
-    INTCON1bits.NSTDIS = 1u;    // Disable nested interrupts
-    IPC0bits.INT0IP = 6u;       // Priority level 6
-    IFS0bits.INT0IF = 0u;       // Clear flag
-    IEC0bits.INT0IE = 1u;       // Enable the interrupt source
-    
     ei();   // Enable all unmasked interrupt sources
     
-    // Now LED blink!
+    uint16_t dc1 = 500u;
+    uint16_t dc2 = 250u;
+    uint8_t i = 0x00u;
+    // Event-handler
     while(1){
+        LATCbits.LATC0 ^= 1u;
+        i ^= 1u;
         
-//        LATCbits.LATC0 ^= 1u;   // Toggle LED
-//        __delay_ms(250);        // Delay 250 ms
-        
+        __delay_ms(500);
     }
-    
+
     
     return 1;
 }
