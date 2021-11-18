@@ -155,7 +155,7 @@ void pwm_init_default(void) {
     //-------------------------------------------------------------------------
     // Enable all the PGs!
     PG2CONLbits.ON = 1u;
-    PG2CONLbits.ON = 1u;
+    PG3CONLbits.ON = 1u;
     // PG1 is last to turn on since it acts as the host PG
     PG1CONLbits.ON = 1u;
 }
