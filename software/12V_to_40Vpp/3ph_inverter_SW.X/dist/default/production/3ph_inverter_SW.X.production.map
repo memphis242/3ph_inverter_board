@@ -19,8 +19,9 @@ Command:
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/main.o \
-  build/default/production/src/pwm.o \
   build/default/production/_ext/1472/duty_cycle.o \
+  build/default/production/src/osc.o \
+  build/default/production/src/pwm.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33CK64MC105.gld.00 \
@@ -55,8 +56,6 @@ c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data
                               c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o) (__data_init_extended)
 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normalch.Leo)
                               (__crt_start_mode_normal)
-c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(delay32ch.Leo)
-                              build/default/production/main.o (___delay32)
 
 
 Selected CodeGuard Options:
@@ -92,11 +91,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x156           0x201  (513)
 .const                       0x356               0x258           0x384  (900)
-.text                        0x5ae               0x1c6           0x2a9  (681)
-.init.delay32                0x774                0x1c            0x2a  (42)
-.dinit                       0x790                 0xe            0x15  (21)
+.text                        0x5ae               0x1a4           0x276  (630)
+.dinit                       0x752                 0xe            0x15  (21)
 
-                 Total "program" memory used (bytes):          0x86d  (2157) 3%
+                 Total "program" memory used (bytes):          0x810  (2064) 3%
 
 
 "data" Memory  [Origin = 0x1000, Length = 0x2000]
@@ -140,8 +138,8 @@ External Symbols in Program Memory (by address):
                   0x00041e                  _pwm2_duty_cycle_vals
                   0x0004e6                  _pwm3_duty_cycle_vals
                   0x0005ae                  _pwm_init_default
-                  0x0006e4                  _main
-                  0x000774                  ___delay32
+                  0x0006e4                  _osc_init_default
+                  0x000744                  _main
                   0x00af00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
@@ -149,12 +147,12 @@ External Symbols in Program Memory (by name):
                   0x000350                  __DefaultInterrupt
                   0x00af00                  __FSEC.sec
                   0x0002fa                  __PWM1Interrupt
-                  0x000774                  ___delay32
                   0x000248                  __data_init
                   0x000248                  __data_init_extended
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0006e4                  _main
+                  0x000744                  _main
+                  0x0006e4                  _osc_init_default
                   0x000356                  _pwm1_duty_cycle_vals
                   0x00041e                  _pwm2_duty_cycle_vals
                   0x0004e6                  _pwm3_duty_cycle_vals
@@ -186,8 +184,9 @@ FALTREG          0x00af44           0x000002
 Linker script and memory map
 
 LOAD build/default/production/main.o
-LOAD build/default/production/src/pwm.o
 LOAD build/default/production/_ext/1472/duty_cycle.o
+LOAD build/default/production/src/osc.o
+LOAD build/default/production/src/pwm.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD p33CK64MC105
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libfx-elf.a
@@ -296,34 +295,39 @@ __FALTREG
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1ee6
+.debug_info       0x000000       0x1eb3
  *(.debug_info)
- .debug_info      0x000000        0xeeb build/default/production/main.o
- .debug_info      0x000eeb        0xe34 build/default/production/src/pwm.o
- .debug_info      0x001d1f        0x1c7 build/default/production/_ext/1472/duty_cycle.o
+ .debug_info      0x000000        0x6bf build/default/production/main.o
+ .debug_info      0x0006bf        0x1c7 build/default/production/_ext/1472/duty_cycle.o
+ .debug_info      0x000886        0x7f9 build/default/production/src/osc.o
+ .debug_info      0x00107f        0xe34 build/default/production/src/pwm.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x22e
+.debug_abbrev     0x000000        0x2c7
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x117 build/default/production/main.o
- .debug_abbrev    0x000117         0xc1 build/default/production/src/pwm.o
- .debug_abbrev    0x0001d8         0x56 build/default/production/_ext/1472/duty_cycle.o
+ .debug_abbrev    0x000000         0xeb build/default/production/main.o
+ .debug_abbrev    0x0000eb         0x56 build/default/production/_ext/1472/duty_cycle.o
+ .debug_abbrev    0x000141         0xc5 build/default/production/src/osc.o
+ .debug_abbrev    0x000206         0xc1 build/default/production/src/pwm.o
 
-.debug_line       0x000000        0x2f9
+.debug_line       0x000000        0x3f8
  *(.debug_line)
- .debug_line      0x000000        0x135 build/default/production/main.o
- .debug_line      0x000135        0x148 build/default/production/src/pwm.o
- .debug_line      0x00027d         0x7c build/default/production/_ext/1472/duty_cycle.o
+ .debug_line      0x000000        0x124 build/default/production/main.o
+ .debug_line      0x000124         0x7c build/default/production/_ext/1472/duty_cycle.o
+ .debug_line      0x0001a0        0x110 build/default/production/src/osc.o
+ .debug_line      0x0002b0        0x148 build/default/production/src/pwm.o
 
-.debug_frame      0x000000         0x80
+.debug_frame      0x000000         0xae
  *(.debug_frame)
  .debug_frame     0x000000         0x52 build/default/production/main.o
- .debug_frame     0x000052         0x2e build/default/production/src/pwm.o
+ .debug_frame     0x000052         0x2e build/default/production/src/osc.o
+ .debug_frame     0x000080         0x2e build/default/production/src/pwm.o
 
-.debug_str        0x000000        0x1ab
+.debug_str        0x000000        0x1a2
  *(.debug_str)
- .debug_str       0x000000         0xb0 build/default/production/main.o
- .debug_str       0x0000b0         0xfb build/default/production/src/pwm.o
+ .debug_str       0x000000         0x7b build/default/production/main.o
+ .debug_str       0x00007b         0x2c build/default/production/src/osc.o
+ .debug_str       0x0000a7         0xfb build/default/production/src/pwm.o
 
 .debug_loc
  *(.debug_loc)
@@ -332,24 +336,28 @@ __FALTREG
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0xc8
+                  0x000000         0xef
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x2e build/default/production/main.o
  .debug_pubnames
-                  0x00002e         0x3d build/default/production/src/pwm.o
+                  0x00002e         0x5d build/default/production/_ext/1472/duty_cycle.o
  .debug_pubnames
-                  0x00006b         0x5d build/default/production/_ext/1472/duty_cycle.o
+                  0x00008b         0x27 build/default/production/src/osc.o
+ .debug_pubnames
+                  0x0000b2         0x3d build/default/production/src/pwm.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x30
+.debug_aranges    0x000000         0x48
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/main.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/src/pwm.o
+                  0x000018         0x18 build/default/production/src/osc.o
+ .debug_aranges
+                  0x000030         0x18 build/default/production/src/pwm.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2510,28 +2518,30 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000030        0x393
+                  0x000048        0x395
  .debug_pubtypes
-                  0x000030        0x14c build/default/production/main.o
+                  0x000048         0xab build/default/production/main.o
  .debug_pubtypes
-                  0x00017c        0x228 build/default/production/src/pwm.o
+                  0x0000f3         0x1f build/default/production/_ext/1472/duty_cycle.o
  .debug_pubtypes
-                  0x0003a4         0x1f build/default/production/_ext/1472/duty_cycle.o
+                  0x000112         0xa3 build/default/production/src/osc.o
+ .debug_pubtypes
+                  0x0001b5        0x228 build/default/production/src/pwm.o
 
 __c30_signature
-                  0x0003c3         0x24
+                  0x0003dd         0x24
  __c30_signature
-                  0x0003c3          0x6 build/default/production/main.o
+                  0x0003dd          0x6 build/default/production/main.o
  __c30_signature
-                  0x0003c9          0x6 build/default/production/src/pwm.o
+                  0x0003e3          0x6 build/default/production/_ext/1472/duty_cycle.o
  __c30_signature
-                  0x0003cf          0x6 build/default/production/_ext/1472/duty_cycle.o
+                  0x0003e9          0x6 build/default/production/src/osc.o
  __c30_signature
-                  0x0003d5          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
+                  0x0003ef          0x6 build/default/production/src/pwm.o
  __c30_signature
-                  0x0003db          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
+                  0x0003f5          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
  __c30_signature
-                  0x0003e1          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(delay32ch.Leo)
+                  0x0003fb          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
 
 .nbss               0x1000          0x4
  .nbss              0x1000          0x2 build/default/production/main.o
@@ -2603,15 +2613,13 @@ __c30_signature
                     0x841e                  _pwm2_duty_cycle_vals
                     0x84e6                  _pwm3_duty_cycle_vals
 
-.text             0x0005ae        0x1c6
+.text             0x0005ae        0x1a4
  .text            0x0005ae        0x136 build/default/production/src/pwm.o
                   0x0005ae                  _pwm_init_default
- .text            0x0006e4         0x90 build/default/production/main.o
-                  0x0006e4                  _main
+ .text            0x0006e4         0x60 build/default/production/src/osc.o
+                  0x0006e4                  _osc_init_default
+ .text            0x000744          0xe build/default/production/main.o
+                  0x000744                  _main
 
-.init.delay32     0x000774         0x1c
- .init.delay32    0x000774         0x1c c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(delay32ch.Leo)
-                  0x000774                  ___delay32
-
-.dinit            0x000790          0xe
- .dinit           0x000790          0xe data_init
+.dinit            0x000752          0xe
+ .dinit           0x000752          0xe data_init

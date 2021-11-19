@@ -428,30 +428,208 @@
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="PWM GENERATOR-SPECIFIC REGISTERS & MACROS">
-/* PCLKCON - PWM Clock Control Register -  Register 11-1 in datasheet
- * Default/POR: xxxxxxx 0
- *              xx 00 xx 00
+/* PGxCONL - PWM Generator x Control Register Low -  Register 11-12 in datasheet
+ * Default/POR: 0 xxxx 000
+ *              xxx 00 000
  * +-------------------------------------------------------------------------------------------------+
  * |    bit 15  |    bit 14  |   bit 13  |   bit 12  |   bit 11  |   bit 10  |   bit 9   |   bit 8   |
  * +-------------------------------------------------------------------------------------------------+
- * |........................................undef........................................|...LOCK....|
+ * |...ON.......|......................undef.....................|...............TRGCNT..............|
  * +-------------------------------------------------------------------------------------------------+
  * +-------------------------------------------------------------------------------------------------+
  * |    bit 7   |    bit 6   |   bit 5   |   bit 4   |   bit 3   |   bit 2   |   bit 1   |   bit 0   |
  * +-------------------------------------------------------------------------------------------------+
- * |..........undef..........|.........DIVSEL........|........undef..........|.......MCLKSEL.........|
+ * |.................undef...............|.........CLKSEL........|.............MODSEL................|
  * +-------------------------------------------------------------------------------------------------+
  * This register contains:
  * 
+ *      (R/W) ON : PWMx Enable bit
+ *      (R/W) TRGCNT : Trigger Count select bits
+ *              111 = PWM Generator produces eight PWM cycles after getting triggered
+ *              110 = "" seven
+ *              101 = "" six
+ *              100 = "" five
+ *              011 = "" four
+ *              010 = "" three
+ *              001 = "" two
+ *              000 = "" one
+ *      (R/W) CLKSEL : Clock Selection bits
+ *              11 = PG uses Master Clock scaled by frequency scaling circuit
+ *              10 = PG uses Master clock divided by clock divider circuit
+ *              01 = PG uses Master clock (selected by MCLKSEL in PCLKCON)
+ *              00 = No clock, PG is in Low Power state (default)
+ *      (R/W) MODSEL : Mode Selection bits
+ *              111 = Dual Edge Center-Aligned PWM mode (interrupt/register update twice per cycle)
+ *              110 = Dual Edge Center-Aligned PWM mode ("" once per cycle)
+ *              101 = Double-Update Center-Aligned PWM mode
+ *              100 = Center-Aligned PWM mode
+ *              011 = Reserved
+ *              010 = Independent Edge PWM mode, dual output
+ *              001 = Variable Phase PWM mode
+ *              000 = Independent Edge PWM mode
+ * 
  */
+#define PWM1_ON                 (PG1CONLbits.ON = 1u)
+#define PWM2_ON                 (PG2CONLbits.ON = 1u)
+#define PWM3_ON                 (PG3CONLbits.ON = 1u)
 
+#define PWM1_TRIGGER_COUNT_1    (PG1CONLbits.TRGCNT = 0u)
+#define PWM2_TRIGGER_COUNT_1    (PG2CONLbits.TRGCNT = 0u)
+#define PWM3_TRIGGER_COUNT_1    (PG3CONLbits.TRGCNT = 0u)
+// More TODO
 
+#define PWM1_CLKSEL_MASTER_CLK_DIV      (PG1CONLbits.CLKSEL = 2u)
+#define PWM2_CLKSEL_MASTER_CLK_DIV      (PG2CONLbits.CLKSEL = 2u)
+#define PWM3_CLKSEL_MASTER_CLK_DIV      (PG3CONLbits.CLKSEL = 2u)
+// More TODO
+
+#define PWM1_INDEPENDENT_EDGE_MODE      (PG1CONLbits.MODSEL = 0u)
+#define PWM2_INDEPENDENT_EDGE_MODE      (PG2CONLbits.MODSEL = 0u)
+#define PWM3_INDEPENDENT_EDGE_MODE      (PG3CONLbits.MODSEL = 0u)
+// More TODO
+
+/* PGxCONH - PWM Generator x Control Register High -  Register 11-13 in datasheet
+ * Default/POR: 0 0 0 x 0 000
+ *              x 0 xx 0000
+ * +-------------------------------------------------------------------------------------------------+
+ * |    bit 15  |    bit 14  |   bit 13  |   bit 12  |   bit 11  |   bit 10  |   bit 9   |   bit 8   |
+ * +-------------------------------------------------------------------------------------------------+
+ * |...MDCSEL...|...MPERSEL..|...MPHSEL..|...undef...|...MSTEN...|..............UPMODE...............|
+ * +-------------------------------------------------------------------------------------------------+
+ * +-------------------------------------------------------------------------------------------------+
+ * |    bit 7   |    bit 6   |   bit 5   |   bit 4   |   bit 3   |   bit 2   |   bit 1   |   bit 0   |
+ * +-------------------------------------------------------------------------------------------------+
+ * |...undef....|...TRGMOD...|.........undef.........|.....................SOCS......................|
+ * +-------------------------------------------------------------------------------------------------+
+ * This register contains:
+ * 
+ *      (R/W) MDCSEL : Master Duty Cycle register select --> 1 = PG uses MDC register, 0 = PG uses PGxDC
+ *      (R/W) MDPERSEL : Master Period register select ""
+ *      (R/W) MPHSEL : Master Phase register select ""
+ *      (R/W) MSTEN : Master Update Enable bit --> 1 = PG broadcasts software set/clear of the UPDREQ bit and
+ *                                                     EOC signal to other PGs - i.e., PG acts as Master Update.
+ *                                                     Update is broadcast when MSTEN = 1 and UPDREQ = 1.
+ *                                                 0 = No broadcast performed
+ *      (R/W) UPMODE : PWM Buffer Update Mode Selection bits
+ *                  011 = Client immediate update --> Updates data registers immediately, or as soon as possible,
+ *                                                    when Master update request is received.
+ *                  010 = Client SOC update --> Updates data registers at the start of the next cycle if a Master
+ *                                              update request is received.
+ *                  001 = Immediate update --> Updates data registers immediately, or asap, if UPDREQ = 1 for this PG
+ *                  000 = SOC Update --> Updates data registers at start of next PWM cycle if UPDREQ = 1 for this PG
+ *      (R/W) TRGMOD : PG Trigger Mode Selection bit --> 1 = PG operates in Retriggerable mode, 0 = Single Trigger mode
+ *      (R/W) SOCS : Start-of-Cycle Selection bits
+ *                  F = TRIG bit or PCI Sync function only (no hardware trigger source is selected)
+ *                  E -> 5 = Reserved
+ *                  4 = Trigger output selected by PG4 PGTRGSEL[2:0] bits in PGxEVTL[2:0]
+ *                  3 = "" PG3
+ *                  2 = "" PG2
+ *                  1 = "" PG1
+ *                  0 = Local EOC --> PG is self-triggered
+ *
+ */
 // </editor-fold>
+#define PWM1_USE_MASTER_DUTY_CYCLE           (PG1CONHbits.MDCSEL = 1u)
+#define PWM2_USE_MASTER_DUTY_CYCLE           (PG2CONHbits.MDCSEL = 1u)
+#define PWM3_USE_MASTER_DUTY_CYCLE           (PG3CONHbits.MDCSEL = 1u)
+#define PWM1_USE_OWN_DUTY_CYCLE              (PG1CONHbits.MDCSEL = 0u)
+#define PWM2_USE_OWN_DUTY_CYCLE              (PG2CONHbits.MDCSEL = 0u)
+#define PWM3_USE_OWN_DUTY_CYCLE              (PG3CONHbits.MDCSEL = 0u)
+
+#define PWM1_USE_MASTER_PERIOD               (PG1CONHbits.MPERSEL = 1u)
+#define PWM2_USE_MASTER_PERIOD               (PG2CONHbits.MPERSEL = 1u)
+#define PWM3_USE_MASTER_PERIOD               (PG3CONHbits.MPERSEL = 1u)
+// More TODO
+
+#define PWM1_USE_MASTER_PHASE                (PG1CONHbits.MPHSEL = 1u)
+#define PWM2_USE_MASTER_PHASE                (PG2CONHbits.MPHSEL = 1u)
+#define PWM3_USE_MASTER_PHASE                (PG3CONHbits.MPHSEL = 1u)
+// More TODO
+
+#define PWM1_MASTER_UPDATE_ENABLE            (PG1CONHbits.MSTEN = 1u)
+// More TODO
+#define PWM1_UPDATE_ON_SOC                   (PG1CONHbits.UPDMOD = 0u)
+// More TODO
+#define PWM2_UPDATE_ON_MASTER_REQ_SOC        (PG2CONHbits.UPDMOD = 2u)
+#define PWM3_UPDATE_ON_MASTER_REQ_SOC        (PG3CONHbits.UPDMOD = 2u)
+// More TODO
+// I'll keep the below macros here for now since they are related to the above macros
+#define PWM1_MANUAL_UPDATE_REQUEST           (PG1STATbits.UPDREQ = 1u)
+#define PWM2_MANUAL_UPDATE_REQUEST           (PG2STATbits.UPDREQ = 1u)
+#define PWM3_MANUAL_UPDATE_REQUEST           (PG3STATbits.UPDREQ = 1u)
+
+#define PMW1_SELF_TRIGGER                    (PG1CONHbits.SOCS = 0u)
+//More TODO
+#define PWM2_PG1_TRIGGER                     (PG2CONHbits.SOCS = 1u)
+#define PWM3_PG1_TRIGGER                     (PG3CONHbits.SOCS = 1u)
+// More TODO
+// I'll just put the below macros here for now since they are related to the above macros
+#define PWM1_MANUAL_TRIGGER                  (PG1STATbits.TRSET = 1u)
+#define PWM2_MANUAL_TRIGGER                  (PG2STATbits.TRSET = 1u)
+#define PWM3_MANUAL_TRIGGER                  (PG3STATbits.TRSET = 1u)
+
+/* PGxIOCONH - PWM Generator x I/O Control Register High -  Register 11-16 in datasheet
+ * Default/POR: x 000 xxx 0
+ *              xx 00 0 0 0 0
+ * +-------------------------------------------------------------------------------------------------+
+ * |    bit 15  |    bit 14  |   bit 13  |   bit 12  |   bit 11  |   bit 10  |   bit 9   |   bit 8   |
+ * +-------------------------------------------------------------------------------------------------+
+ * |...undef....|...............CAPSRC...............|...............undef...............|..DTCMPSEL.|
+ * +-------------------------------------------------------------------------------------------------+
+ * +-------------------------------------------------------------------------------------------------+
+ * |    bit 7   |    bit 6   |   bit 5   |   bit 4   |   bit 3   |   bit 2   |   bit 1   |   bit 0   |
+ * +-------------------------------------------------------------------------------------------------+
+ * |..........undef..........|........PMOD...........|...PENH....|...PENL....|...POLH....|...POLL....|
+ * +-------------------------------------------------------------------------------------------------+
+ * This register contains:
+ * 
+ *      (R/W) CAPSRC : Time Base Capture Source Selection bits
+ *          ...
+ *      (R/W) DTCMPSEL : Dead-Time Compensation bit
+ *      (R/W) PMOD[1:0] : PG Output Mode selection
+ *                  11 = Reserved
+ *                  10 = Push-Pull mode
+ *                  01 = Independent mode
+ *                  00 = Complementary mode
+ *      (R/W) PENH : PWMxH Output Port Enable
+ *      (R/W) PENL : PWMxL Output Port Enable
+ *      (R/W) POLH : PWMxH Output Polarity --> 1 = active-low, 0 = active-high
+ *      (R/W) POLL : PWMxL Output Polarity --> ""
+ * 
+ */
+#define PWM1_OUTPUT_COMPLEMENTARY       (PG1IOCONHbits.PMOD = 0u)
+#define PWM2_OUTPUT_COMPLEMENTARY       (PG2IOCONHbits.PMOD = 0u)
+#define PWM3_OUTPUT_COMPLEMENTARY       (PG3IOCONHbits.PMOD = 0u)
+// more TODO
+
+#define PWM1H_PIN_ENABLE                (PG1IOCONHbits.PENH = 1u)
+#define PWM2H_PIN_ENABLE                (PG2IOCONHbits.PENH = 1u)
+#define PWM3H_PIN_ENABLE                (PG3IOCONHbits.PENH = 1u)
+#define PWM1L_PIN_ENABLE                (PG1IOCONHbits.PENL = 1u)
+#define PWM2L_PIN_ENABLE                (PG2IOCONHbits.PENL = 1u)
+#define PWM3L_PIN_ENABLE                (PG3IOCONHbits.PENL = 1u)
+
+#define PWM1H_PIN_POLARITY_ACTIVE_HIGH   (PG1IOCONHbits.POLH = 0u)
+#define PWM2H_PIN_POLARITY_ACTIVE_HIGH   (PG2IOCONHbits.POLH = 0u)
+#define PWM3H_PIN_POLARITY_ACTIVE_HIGH   (PG3IOCONHbits.POLH = 0u)
+#define PWM1L_PIN_POLARITY_ACTIVE_HIGH   (PG1IOCONHbits.POLL = 0u)
+#define PWM2L_PIN_POLARITY_ACTIVE_HIGH   (PG2IOCONHbits.POLL = 0u)
+#define PWM3L_PIN_POLARITY_ACTIVE_HIGH   (PG3IOCONHbits.POLL = 0u)
+// more TODO
 
  
-#define PWM1_UPDATE_DUTY_CYCLE(X)        (PG1DC = (X))
-#define PWM2_UPDATE_DUTY_CYCLE(X)        (PG2DC = (X))
-#define PWM3_UPDATE_DUTY_CYCLE(X)        (PG3DC = (X))
+// General useful macros
+#define PWM1_UPDATE_ON_WRITE_TO_DUTY_CYCLE      (PG1EVTLbits.UPDTRG = 1u)
+#define PWM1_UPDATE_DUTY_CYCLE(X)               (PG1DC = (X))
+#define PWM2_UPDATE_DUTY_CYCLE(X)               (PG2DC = (X))
+#define PWM3_UPDATE_DUTY_CYCLE(X)               (PG3DC = (X))
+
+// Interrupt-related
+#define PWM1_EOC_INTERRUPT_SELECT       (PG1EVTHbits.IEVTSEL = 0u)
+#define PWM1_INTERRUPT_PRIORITY(X)      (IPC16bits.PWM1IP = (X))
+#define PWM1_CLEAR_IF                   (IFS4bits.PWM1IF = 0u)
+#define PWM1_ENABLE_INTERRUPT           (IEC4bits.PWM1IE = 1u)
+
 
 
 // Enums

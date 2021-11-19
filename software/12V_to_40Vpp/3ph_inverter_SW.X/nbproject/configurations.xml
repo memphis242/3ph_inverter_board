@@ -6,6 +6,7 @@
                    projectFiles="true">
       <logicalFolder name="inc" displayName="inc" projectFiles="true">
         <itemPath>inc/pwm.h</itemPath>
+        <itemPath>inc/osc.h</itemPath>
       </logicalFolder>
       <itemPath>../duty_cycle.h</itemPath>
     </logicalFolder>
@@ -16,8 +17,11 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <itemPath>src/osc.c</itemPath>
+        <itemPath>src/pwm.c</itemPath>
+      </logicalFolder>
       <itemPath>main.c</itemPath>
-      <itemPath>src/pwm.c</itemPath>
       <itemPath>../duty_cycle.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -184,7 +188,7 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
-        <property key="common-include-directories" value="inc;src;..\"/>
+        <property key="common-include-directories" value="src;inc;..\"/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>

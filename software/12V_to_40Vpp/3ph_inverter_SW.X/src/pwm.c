@@ -61,14 +61,13 @@ void pwm_init_default(void) {
      * I'm assuming I've set up FPLLO to be 480 MHz, so then I can just use
      * FPLLO and divide by 4.
      */
-    PCLKCONbits.MCLKSEL = 0x2u;  // FPLLO
-    PCLKCONbits.DIVSEL = 0x1u;   // Divide ratio is 1:4
+    PWM_CLK_FPLLO;  // FPLLO
+    PWM_CLKDIV4;    // Divide ratio is 1:4
     
     // Set PWM Master period
-    MPER = 999;     // F_PG_CLK / F_PWM - 1 = (120MHz) / (120kHz) - 1
-    
+    PWM_SET_MASTER_PERIOD(999);     // F_PG_CLK / F_PWM - 1 = (120MHz) / (120kHz) - 1
     // Set Master phase shift
-    MPHASE = 0u;
+    PWM_SET_MASTER_PHASE(0u);
     
     
     /* ----------------------------
@@ -77,29 +76,29 @@ void pwm_init_default(void) {
     // Select master clock input as source, without any changes
     
     
-    PG1CONLbits.TRGCNT = 0u;    // PG produces one PWM cycle after SOC trigger
-    PG2CONLbits.TRGCNT = 0u;
-    PG3CONLbits.TRGCNT = 0u;
-    PG1CONLbits.CLKSEL = 2u;    // Master clock is selected
-    PG2CONLbits.CLKSEL = 2u;
-    PG3CONLbits.CLKSEL = 2u;
-    PG1CONLbits.MODSEL = 0u;    // Independent Edge PWM mode
-    PG2CONLbits.MODSEL = 0u;
-    PG3CONLbits.MODSEL = 0u;
+    PWM1_TRIGGER_COUNT_1;    // PG produces one PWM cycle after SOC trigger
+    PWM2_TRIGGER_COUNT_1;
+    PWM3_TRIGGER_COUNT_1;
+    PWM1_CLKSEL_MASTER_CLK_DIV;    // Master clock is selected
+    PWM2_CLKSEL_MASTER_CLK_DIV;
+    PWM3_CLKSEL_MASTER_CLK_DIV;
+    PWM1_INDEPENDENT_EDGE_MODE;    // Independent Edge PWM mode
+    PWM2_INDEPENDENT_EDGE_MODE;
+    PWM3_INDEPENDENT_EDGE_MODE;
     
-    PG1CONHbits.MDCSEL = 0u;    // Duty cycle from PGxDC
-    PG2CONHbits.MDCSEL = 0u;
-    PG3CONHbits.MDCSEL = 0u;
-    PG1CONHbits.MPERSEL = 1u;   // Master Period register used
-    PG2CONHbits.MPERSEL = 1u;
-    PG3CONHbits.MPERSEL = 1u;
-    PG1CONHbits.MPHSEL = 1u;    // Master Phase register used
-    PG2CONHbits.MPHSEL = 1u;
-    PG3CONHbits.MPHSEL = 1u;
+    PWM1_USE_OWN_DUTY_CYCLE;    // Duty cycle from PGxDC
+    PWM2_USE_OWN_DUTY_CYCLE;
+    PWM3_USE_OWN_DUTY_CYCLE;
+    PWM1_USE_MASTER_PERIOD;   // Master Period register used
+    PWM2_USE_MASTER_PERIOD;
+    PWM3_USE_MASTER_PERIOD;
+    PWM1_USE_MASTER_PHASE;    // Master Phase register used
+    PWM2_USE_MASTER_PHASE;
+    PWM3_USE_MASTER_PHASE;
     
-    PG1IOCONHbits.PMOD = 0u;    // Complementary output mode
-    PG2IOCONHbits.PMOD = 0u;
-    PG3IOCONHbits.PMOD = 0u;
+    PWM1_OUTPUT_COMPLEMENTARY;    // Complementary output mode
+    PWM2_OUTPUT_COMPLEMENTARY;
+    PWM3_OUTPUT_COMPLEMENTARY;
     
     // Set dead-time to about >60ns since we're using complementary outputs
     // I'll note that the DRV8300 actually automatically inserts a 200ns dead-time
@@ -112,40 +111,40 @@ void pwm_init_default(void) {
     PG3DTH = 10u;
     
     // Enable the PWM modules to control their respective PWMxH and PWMxL pins
-    PG1IOCONHbits.PENH = 1u;    // PWMxH pin
-    PG2IOCONHbits.PENH = 1u;
-    PG3IOCONHbits.PENH = 1u;
-    PG1IOCONHbits.PENL = 1u;    // PWMxL pin
-    PG2IOCONHbits.PENL = 1u;
-    PG3IOCONHbits.PENL = 1u;
+    PWM1H_PIN_ENABLE;    // PWMxH pin
+    PWM2H_PIN_ENABLE;
+    PWM3H_PIN_ENABLE;
+    PWM1L_PIN_ENABLE;    // PWMxL pin
+    PWM2L_PIN_ENABLE;
+    PWM3L_PIN_ENABLE;
     
-    PG1IOCONHbits.POLH = 0u;    // Pin is active-high
-    PG2IOCONHbits.POLH = 0u;
-    PG3IOCONHbits.POLH = 0u;
-    PG1IOCONHbits.POLL = 0u;
-    PG2IOCONHbits.POLL = 0u;
-    PG3IOCONHbits.POLL = 0u;
+    PWM1H_PIN_POLARITY_ACTIVE_HIGH;    // Pin is active-high
+    PWM2H_PIN_POLARITY_ACTIVE_HIGH;
+    PWM3H_PIN_POLARITY_ACTIVE_HIGH;
+    PWM1L_PIN_POLARITY_ACTIVE_HIGH;
+    PWM2L_PIN_POLARITY_ACTIVE_HIGH;
+    PWM3L_PIN_POLARITY_ACTIVE_HIGH;
     
     
     // Set up PG1 as host and PG2 and PG3 as clients for trigger setup
-    PG1CONHbits.SOCS = 0u;  // Self-trigger for PG1
-    PG2CONHbits.SOCS = 1u;  // PG1-triggered
-    PG3CONHbits.SOCS = 1u;  // PG1-triggered
+    PMW1_SELF_TRIGGER;  // Self-trigger for PG1
+    PWM2_PG1_TRIGGER;  // PG1-triggered
+    PWM3_PG1_TRIGGER;  // PG1-triggered
     
     
     // Configure SFR updates from PG1DC
-    PG1CONHbits.MSTEN = 1u;     // PG1 as Master update for UPDREQ
-    PG1EVTLbits.UPDTRG = 1u;    // A write to the PG1DC register automatically sets UPDREQ in PG1STAT
-    PG1CONHbits.UPDMOD = 0u;
-    PG2CONHbits.UPDMOD = 2u;
-    PG3CONHbits.UPDMOD = 2u;
+    PWM1_MASTER_UPDATE_ENABLE;     // PG1 as Master update for UPDREQ
+    PWM1_UPDATE_ON_WRITE_TO_DUTY_CYCLE;    // A write to the PG1DC register automatically sets UPDREQ in PG1STAT
+    PWM1_UPDATE_ON_SOC;
+    PWM2_UPDATE_ON_MASTER_REQ_SOC;
+    PWM3_UPDATE_ON_MASTER_REQ_SOC;
     
     // Set up interrupts at PG1 EOC --> Note this is the PWM Generator 1 interrupt,
     // with the reserved XC16 ISR name _PWM1Interrupt, vector #75
-    PG1EVTHbits.IEVTSEL = 0u;   // EOC will generate interrupt from PG1
-    IPC16bits.PWM1IP = 6u;      // Priority level 6
-    IFS4bits.PWM1IF = 0u;       // Clear flag
-    IEC4bits.PWM1IE = 1u;       // Enable interrupt
+    PWM1_EOC_INTERRUPT_SELECT;   // EOC will generate interrupt from PG1
+    PWM1_INTERRUPT_PRIORITY(6u);      // Priority level 6
+    PWM1_CLEAR_IF;       // Clear flag
+    PWM1_ENABLE_INTERRUPT;       // Enable interrupt
     
     // Load up with initial duty cycle values...
     PWM2_UPDATE_DUTY_CYCLE(500);
@@ -154,8 +153,8 @@ void pwm_init_default(void) {
     
     //-------------------------------------------------------------------------
     // Enable all the PGs!
-    PG2CONLbits.ON = 1u;
-    PG3CONLbits.ON = 1u;
+    PWM2_ON;
+    PWM3_ON;
     // PG1 is last to turn on since it acts as the host PG
-    PG1CONLbits.ON = 1u;
+    PWM1_ON;
 }
