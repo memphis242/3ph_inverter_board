@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c ../duty_cycle.c src/osc.c src/pwm.c
+SOURCEFILES_QUOTED_IF_SPACED=src/osc.c src/pwm.c main.c ../duty_cycle.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/1472/duty_cycle.o ${OBJECTDIR}/src/osc.o ${OBJECTDIR}/src/pwm.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/_ext/1472/duty_cycle.o.d ${OBJECTDIR}/src/osc.o.d ${OBJECTDIR}/src/pwm.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/osc.o ${OBJECTDIR}/src/pwm.o ${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/1472/duty_cycle.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/osc.o.d ${OBJECTDIR}/src/pwm.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/_ext/1472/duty_cycle.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/1472/duty_cycle.o ${OBJECTDIR}/src/osc.o ${OBJECTDIR}/src/pwm.o
+OBJECTFILES=${OBJECTDIR}/src/osc.o ${OBJECTDIR}/src/pwm.o ${OBJECTDIR}/main.o ${OBJECTDIR}/_ext/1472/duty_cycle.o
 
 # Source Files
-SOURCEFILES=main.c ../duty_cycle.c src/osc.c src/pwm.c
+SOURCEFILES=src/osc.c src/pwm.c main.c ../duty_cycle.c
 
 
 
@@ -95,54 +95,54 @@ MP_LINKER_FILE_OPTION=,--script=p33CK64MC105.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/main.o: main.c  .generated_files/afcc1e5964bd2c4da0dc677a0902abffeff34e1c.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/_ext/1472/duty_cycle.o: ../duty_cycle.c  .generated_files/1e195f6970dc27c3e0655c8ca4b441fd27203b35.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
-	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
-	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../duty_cycle.c  -o ${OBJECTDIR}/_ext/1472/duty_cycle.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/_ext/1472/duty_cycle.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/osc.o: src/osc.c  .generated_files/efcc3595568cbfeaf47f03d53483edd6150b833f.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+${OBJECTDIR}/src/osc.o: src/osc.c  .generated_files/flags/default/efcc3595568cbfeaf47f03d53483edd6150b833f .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/osc.o.d 
 	@${RM} ${OBJECTDIR}/src/osc.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/osc.c  -o ${OBJECTDIR}/src/osc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/osc.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/pwm.o: src/pwm.c  .generated_files/d798f6f0bbdb27018eda82fcd0ce00f74d5138c8.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+${OBJECTDIR}/src/pwm.o: src/pwm.c  .generated_files/flags/default/d798f6f0bbdb27018eda82fcd0ce00f74d5138c8 .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/pwm.o.d 
 	@${RM} ${OBJECTDIR}/src/pwm.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/pwm.c  -o ${OBJECTDIR}/src/pwm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/pwm.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-else
-${OBJECTDIR}/main.o: main.c  .generated_files/2e44763133f07267c3e64b78e6b8d715fce9716e.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/afcc1e5964bd2c4da0dc677a0902abffeff34e1c .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/_ext/1472/duty_cycle.o: ../duty_cycle.c  .generated_files/353274b2890eff04b7a54550b1eddd603350eaab.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+${OBJECTDIR}/_ext/1472/duty_cycle.o: ../duty_cycle.c  .generated_files/flags/default/1e195f6970dc27c3e0655c8ca4b441fd27203b35 .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
 	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../duty_cycle.c  -o ${OBJECTDIR}/_ext/1472/duty_cycle.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/_ext/1472/duty_cycle.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../duty_cycle.c  -o ${OBJECTDIR}/_ext/1472/duty_cycle.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/_ext/1472/duty_cycle.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/osc.o: src/osc.c  .generated_files/af45ad2566d496e4df318053c6cbea8ea4358c47.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+else
+${OBJECTDIR}/src/osc.o: src/osc.c  .generated_files/flags/default/af45ad2566d496e4df318053c6cbea8ea4358c47 .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/osc.o.d 
 	@${RM} ${OBJECTDIR}/src/osc.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/osc.c  -o ${OBJECTDIR}/src/osc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/osc.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/pwm.o: src/pwm.c  .generated_files/238b1fe6a0ff972f48b4f26d3ca44aca4b7befb6.flag .generated_files/61baeff21fb2ae7ce8ae7a6e3d994bed32019aa1.flag
+${OBJECTDIR}/src/pwm.o: src/pwm.c  .generated_files/flags/default/238b1fe6a0ff972f48b4f26d3ca44aca4b7befb6 .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
 	@${MKDIR} "${OBJECTDIR}/src" 
 	@${RM} ${OBJECTDIR}/src/pwm.o.d 
 	@${RM} ${OBJECTDIR}/src/pwm.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/pwm.c  -o ${OBJECTDIR}/src/pwm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/pwm.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/2e44763133f07267c3e64b78e6b8d715fce9716e .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/_ext/1472/duty_cycle.o: ../duty_cycle.c  .generated_files/flags/default/353274b2890eff04b7a54550b1eddd603350eaab .generated_files/flags/default/21d4c28cc342abb3e7fd34dcaadebc972c1328a4
+	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
+	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/duty_cycle.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../duty_cycle.c  -o ${OBJECTDIR}/_ext/1472/duty_cycle.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/_ext/1472/duty_cycle.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"src" -I"inc" -I"../" -O0 -I"inc" -I"src" -I"../" -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

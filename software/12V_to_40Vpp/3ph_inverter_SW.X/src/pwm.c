@@ -103,12 +103,12 @@ void pwm_init_default(void) {
     // Set dead-time to about >60ns since we're using complementary outputs
     // I'll note that the DRV8300 actually automatically inserts a 200ns dead-time
     // if it detects both PWMH and PWML pins are both HIGH at the same time.
-    PG1DTL = 10u;   // For PWMxL
-    PG2DTL = 10u;
-    PG3DTL = 10u;
-    PG1DTH = 10u;   // For PWMxH
-    PG2DTH = 10u;
-    PG3DTH = 10u;
+    PG1DTL = 120u;   // For PWMxL
+    PG2DTL = 120u;
+    PG3DTL = 120u;
+    PG1DTH = 120u;   // For PWMxH
+    PG2DTH = 120u;
+    PG3DTH = 120u;
     
     // Enable the PWM modules to control their respective PWMxH and PWMxL pins
     PWM1H_PIN_ENABLE;    // PWMxH pin
@@ -121,9 +121,14 @@ void pwm_init_default(void) {
     PWM1H_PIN_POLARITY_ACTIVE_HIGH;    // Pin is active-high
     PWM2H_PIN_POLARITY_ACTIVE_HIGH;
     PWM3H_PIN_POLARITY_ACTIVE_HIGH;
-    PWM1L_PIN_POLARITY_ACTIVE_HIGH;
-    PWM2L_PIN_POLARITY_ACTIVE_HIGH;
-    PWM3L_PIN_POLARITY_ACTIVE_HIGH;
+    // The low-side lines will be active low since the DRV8300D I'm using is
+    // actually a DRV8300DI, which means the low lines are all inverted...
+//    PWM1L_PIN_POLARITY_ACTIVE_HIGH;
+//    PWM2L_PIN_POLARITY_ACTIVE_HIGH;
+//    PWM3L_PIN_POLARITY_ACTIVE_HIGH;
+    PWM1L_PIN_POLARITY_ACTIVE_LOW;
+    PWM2L_PIN_POLARITY_ACTIVE_LOW;
+    PWM3L_PIN_POLARITY_ACTIVE_LOW;
     
     
     // Set up PG1 as host and PG2 and PG3 as clients for trigger setup

@@ -5,11 +5,11 @@ Tool Name:
 
 Command:
   -p33CK64MC105 \
-  --mdfp=C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16 \
+  --mdfp=C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16 \
   -o \
   dist/default/production/3ph_inverter_SW.X.production.elf \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/.. \
-  -LC:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16/bin/../support/dsPIC33C/gld \
+  -LC:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/dsPIC33CK-MC_DFP/1.3.56/xc16/bin/../support/dsPIC33C/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../lib \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/PIC24E/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/PIC24F/gld \
@@ -18,10 +18,10 @@ Command:
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files/microchip/xc16/v1.70/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
-  build/default/production/_ext/1472/duty_cycle.o \
   build/default/production/src/osc.o \
   build/default/production/src/pwm.o \
+  build/default/production/main.o \
+  build/default/production/_ext/1472/duty_cycle.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp33CK64MC105.gld.00 \
@@ -120,11 +120,11 @@ Info: Project is using a large data memory model when small data memory model is
 
 External Symbols in Data Memory (by address):
 
-                    0x1002                  _pwm_cycle_counter
+                    0x1000                  _pwm_cycle_counter
 
 External Symbols in Data Memory (by name):
 
-                    0x1002                  _pwm_cycle_counter
+                    0x1000                  _pwm_cycle_counter
 
 External Symbols in Program Memory (by address):
 
@@ -183,10 +183,10 @@ FALTREG          0x00af44           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
-LOAD build/default/production/_ext/1472/duty_cycle.o
 LOAD build/default/production/src/osc.o
 LOAD build/default/production/src/pwm.o
+LOAD build/default/production/main.o
+LOAD build/default/production/_ext/1472/duty_cycle.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD p33CK64MC105
 LOAD c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\libfx-elf.a
@@ -297,37 +297,37 @@ __FALTREG
 
 .debug_info       0x000000       0x1eb3
  *(.debug_info)
- .debug_info      0x000000        0x6bf build/default/production/main.o
- .debug_info      0x0006bf        0x1c7 build/default/production/_ext/1472/duty_cycle.o
- .debug_info      0x000886        0x7f9 build/default/production/src/osc.o
- .debug_info      0x00107f        0xe34 build/default/production/src/pwm.o
+ .debug_info      0x000000        0x7f9 build/default/production/src/osc.o
+ .debug_info      0x0007f9        0xe34 build/default/production/src/pwm.o
+ .debug_info      0x00162d        0x6bf build/default/production/main.o
+ .debug_info      0x001cec        0x1c7 build/default/production/_ext/1472/duty_cycle.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x2c7
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0xeb build/default/production/main.o
- .debug_abbrev    0x0000eb         0x56 build/default/production/_ext/1472/duty_cycle.o
- .debug_abbrev    0x000141         0xc5 build/default/production/src/osc.o
- .debug_abbrev    0x000206         0xc1 build/default/production/src/pwm.o
+ .debug_abbrev    0x000000         0xc5 build/default/production/src/osc.o
+ .debug_abbrev    0x0000c5         0xc1 build/default/production/src/pwm.o
+ .debug_abbrev    0x000186         0xeb build/default/production/main.o
+ .debug_abbrev    0x000271         0x56 build/default/production/_ext/1472/duty_cycle.o
 
 .debug_line       0x000000        0x3f8
  *(.debug_line)
- .debug_line      0x000000        0x124 build/default/production/main.o
- .debug_line      0x000124         0x7c build/default/production/_ext/1472/duty_cycle.o
- .debug_line      0x0001a0        0x110 build/default/production/src/osc.o
- .debug_line      0x0002b0        0x148 build/default/production/src/pwm.o
+ .debug_line      0x000000        0x110 build/default/production/src/osc.o
+ .debug_line      0x000110        0x148 build/default/production/src/pwm.o
+ .debug_line      0x000258        0x124 build/default/production/main.o
+ .debug_line      0x00037c         0x7c build/default/production/_ext/1472/duty_cycle.o
 
 .debug_frame      0x000000         0xae
  *(.debug_frame)
- .debug_frame     0x000000         0x52 build/default/production/main.o
- .debug_frame     0x000052         0x2e build/default/production/src/osc.o
- .debug_frame     0x000080         0x2e build/default/production/src/pwm.o
+ .debug_frame     0x000000         0x2e build/default/production/src/osc.o
+ .debug_frame     0x00002e         0x2e build/default/production/src/pwm.o
+ .debug_frame     0x00005c         0x52 build/default/production/main.o
 
 .debug_str        0x000000        0x1a2
  *(.debug_str)
- .debug_str       0x000000         0x7b build/default/production/main.o
- .debug_str       0x00007b         0x2c build/default/production/src/osc.o
- .debug_str       0x0000a7         0xfb build/default/production/src/pwm.o
+ .debug_str       0x000000         0x2c build/default/production/src/osc.o
+ .debug_str       0x00002c         0xfb build/default/production/src/pwm.o
+ .debug_str       0x000127         0x7b build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -339,13 +339,13 @@ __FALTREG
                   0x000000         0xef
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x2e build/default/production/main.o
+                  0x000000         0x27 build/default/production/src/osc.o
  .debug_pubnames
-                  0x00002e         0x5d build/default/production/_ext/1472/duty_cycle.o
+                  0x000027         0x3d build/default/production/src/pwm.o
  .debug_pubnames
-                  0x00008b         0x27 build/default/production/src/osc.o
+                  0x000064         0x2e build/default/production/main.o
  .debug_pubnames
-                  0x0000b2         0x3d build/default/production/src/pwm.o
+                  0x000092         0x5d build/default/production/_ext/1472/duty_cycle.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -353,11 +353,11 @@ __FALTREG
 .debug_aranges    0x000000         0x48
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/src/osc.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/src/osc.o
+                  0x000018         0x18 build/default/production/src/pwm.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/src/pwm.o
+                  0x000030         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2520,33 +2520,33 @@ LOAD data_init
 .debug_pubtypes
                   0x000048        0x395
  .debug_pubtypes
-                  0x000048         0xab build/default/production/main.o
+                  0x000048         0xa3 build/default/production/src/osc.o
  .debug_pubtypes
-                  0x0000f3         0x1f build/default/production/_ext/1472/duty_cycle.o
+                  0x0000eb        0x228 build/default/production/src/pwm.o
  .debug_pubtypes
-                  0x000112         0xa3 build/default/production/src/osc.o
+                  0x000313         0xab build/default/production/main.o
  .debug_pubtypes
-                  0x0001b5        0x228 build/default/production/src/pwm.o
+                  0x0003be         0x1f build/default/production/_ext/1472/duty_cycle.o
 
 __c30_signature
                   0x0003dd         0x24
  __c30_signature
-                  0x0003dd          0x6 build/default/production/main.o
+                  0x0003dd          0x6 build/default/production/src/osc.o
  __c30_signature
-                  0x0003e3          0x6 build/default/production/_ext/1472/duty_cycle.o
+                  0x0003e3          0x6 build/default/production/src/pwm.o
  __c30_signature
-                  0x0003e9          0x6 build/default/production/src/osc.o
+                  0x0003e9          0x6 build/default/production/main.o
  __c30_signature
-                  0x0003ef          0x6 build/default/production/src/pwm.o
+                  0x0003ef          0x6 build/default/production/_ext/1472/duty_cycle.o
  __c30_signature
                   0x0003f5          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extendedch.o)
  __c30_signature
                   0x0003fb          0x6 c:/program files/microchip/xc16/v1.70/bin/bin/../../lib\liblega-pic30-elf.a(data_init_extendedch.o)
 
 .nbss               0x1000          0x4
- .nbss              0x1000          0x2 build/default/production/main.o
- .nbss              0x1002          0x2 build/default/production/src/pwm.o
-                    0x1002                  _pwm_cycle_counter
+ .nbss              0x1000          0x2 build/default/production/src/pwm.o
+                    0x1000                  _pwm_cycle_counter
+ .nbss              0x1002          0x2 build/default/production/main.o
 
 .config_CTXT4     0x00af44          0x2
  .config_CTXT4    0x00af44          0x2 build/default/production/main.o
